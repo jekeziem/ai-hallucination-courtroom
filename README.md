@@ -4,7 +4,8 @@
 
 > An interactive demonstration of Large Language Model (LLM) hallucination risks through simulated courtroom trials with multi-agent evaluation frameworks.
 
-![Demo Screenshot](assets/demo-screenshot.png)
+![Demo Screenshot](<img width="1062" height="760" alt="image" src="https://github.com/user-attachments/assets/a6976dc4-033b-4b7c-831d-73b16f61c73e" />
+)
 
 ---
 
@@ -28,20 +29,17 @@ According to recent AI safety research, LLMs can confidently generate false info
 
 ## 🚀 Live Demo
 
-**Try it here:** [Streamlit Cloud Demo](YOUR_URL_HERE)
+**Try it here:** [Streamlit Cloud Demo](https://ai-hallucination-courtroom.streamlit.app/))
 
 **Or run locally:**
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/ai-hallucination-courtroom.git
+git clone https://github.com/jekeziem/ai-hallucination-courtroom.git
 cd ai-hallucination-courtroom
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Set your API key
-export ANTHROPIC_API_KEY='your-key-here'
 
 # Run the app
 streamlit run app.py
