@@ -148,8 +148,7 @@ The Judge assigns structured scores:
 
 ## ⚠️ Ethical Considerations
 
-This tool intentionally generates false information for educational purposes. **Do not use in production environments where accuracy is critical.**
-
+This tool intentionally generates false information for educational purposes. 
 ---
 
 ## 📧 Contact
