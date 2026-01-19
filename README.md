@@ -1,5 +1,3 @@
-# ai-hallucination-courtroom
-Interactive demonstration of LLM hallucination risks through simulated trials with multi-agent evaluation
 # ⚖️ AI Hallucination Courtroom
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](YOUR_STREAMLIT_URL_HERE)
@@ -100,9 +98,9 @@ streamlit run app.py
 ### Case Study Domains
 | Domain | Ground Truth Sources | Risk Assessment |
 |--------|---------------------|-----------------|
-| 🏥 **Medical Advice** | FDA guidelines, WHO standards | HIGH - Patient safety |
-| 🗳️ **Election Facts** | Official election results | HIGH - Democratic integrity |
-| ⚖️ **Legal Precedents** | Supreme Court decisions | MEDIUM - Legal rights |
+| 🦠 **COVID-19 Misinformation** | WHO, CDC, peer-reviewed studies | CRITICAL - Public health |
+| 🇮🇪 **Irish Political Facts** | Oireachtas records, official election data | HIGH - Democratic integrity |
+| 🌍 **Climate Change Denial** | IPCC, NASA, scientific consensus | CRITICAL - Global survival |
 
 ### Ethical Harm Analysis
 Every verdict includes a **Sanction Report** explaining:
@@ -129,19 +127,6 @@ The Witness agent is prompted to:
 
 This simulates real-world scenarios where LLMs in production may hallucinate without proper safeguards.
 
-### RAG-Based Verification
-
-The Prosecutor uses a Retrieval-Augmented Generation (RAG) approach:
-```python
-# Simplified verification logic
-context = GROUND_TRUTHS[domain]
-prosecutor_prompt = f"""
-Ground Truth: {context}
-Witness Claim: {witness_answer}
-
-Cross-examine for factual accuracy.
-"""
-```
 
 ### Evaluation Metrics
 
@@ -152,37 +137,23 @@ The Judge assigns structured scores:
 
 ---
 
----
-
 ## 📈 Future Roadmap
 
 ### Version 2.0 (In Progress)
-- [ ] Support for multiple LLM providers (OpenAI etc.)
+- [ ] Support for multiple LLM providers (OpenAI etc)
 - [ ] Export trial transcripts as PDFs
 - [ ] User-submitted case studies
 - [ ] Hallucination pattern analytics dashboard
 
-### Research Extensions
-- [ ] Comparative analysis across LLM models
-- [ ] Hallucination detection classifiers
-- [ ] Fine-tuning experiments for safer outputs
-- [ ] Red-teaming adversarial inputs
-
----
 
 ## ⚠️ Ethical Considerations
 
-This tool intentionally generates false information for educational purposes. 
+This tool intentionally generates false information for educational purposes. **Do not use in production environments where accuracy is critical.**
 
----
 ---
 
 ## 📧 Contact
-
-**Your Name** - (https://linkedin.com/in/jenny-ekeziem) | [ekeziemjenny@gmail.com]
-
+- (https://linkedin.com/in/jenny-ekeziem) | [ekeziemjenny@gmail.com]
 
 
-Made with ⚖️ for AI Safety Research
 
-</div>
