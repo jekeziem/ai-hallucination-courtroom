@@ -1,6 +1,5 @@
 # ⚖️ AI Hallucination Courtroom
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](YOUR_STREAMLIT_URL_HERE)
 
 > An interactive demonstration of Large Language Model (LLM) hallucination risks through simulated courtroom trials with multi-agent evaluation frameworks.
 
