@@ -1,5 +1,5 @@
 import streamlit as st
-import anthropic
+from groq import Groq
 import json
 import time
 from datetime import datetime
@@ -228,22 +228,25 @@ def init_session_state():
     if 'api_key' not in st.session_state:
         st.session_state.api_key = None
 
-def get_anthropic_client():
-    """Get Anthropic client with API key"""
+def get_groq_client():
+    """Get Groq client with API key"""
     if not st.session_state.api_key:
         return None
-    return anthropic.Anthropic(api_key=st.session_state.api_key)
+    return Groq(api_key=st.session_state.api_key)
 
-def call_claude(client, system_prompt, user_message, model="claude-sonnet-4-20250514"):
-    """Call Claude API with error handling"""
+def call_llm(client, system_prompt, user_message, model="llama-3.3-70b-versatile"):
+    """Call Groq API with error handling"""
     try:
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=model,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            temperature=0.7,
             max_tokens=1024,
-            system=system_prompt,
-            messages=[{"role": "user", "content": user_message}]
         )
-        return response.content[0].text
+        return response.choices[0].message.content
     except Exception as e:
         st.error(f"API Error: {str(e)}")
         return None
@@ -253,7 +256,7 @@ def run_trial(client, case_study, question):
     
     # Step 1: Witness testifies
     with st.spinner("🎭 The Witness is testifying..."):
-        witness_answer = call_claude(client, WITNESS_PROMPT, question)
+        witness_answer = call_llm(client, WITNESS_PROMPT, question)
         if not witness_answer:
             return None
         time.sleep(0.5)
@@ -270,7 +273,7 @@ def run_trial(client, case_study, question):
     with st.spinner("⚔️ The Prosecutor is cross-examining..."):
         prosecutor_prompt = PROSECUTOR_PROMPT.format(context=GROUND_TRUTHS[case_study]["context"])
         prosecutor_message = f"The Witness just testified: '{witness_answer}'\n\nQuestion asked: '{question}'\n\nCross-examine this testimony."
-        prosecutor_challenge = call_claude(client, prosecutor_prompt, prosecutor_message)
+        prosecutor_challenge = call_llm(client, prosecutor_prompt, prosecutor_message)
         if not prosecutor_challenge:
             return None
         time.sleep(0.5)
@@ -291,7 +294,7 @@ def run_trial(client, case_study, question):
             prosecutor_challenge=prosecutor_challenge
         )
         judge_message = f"Deliver your verdict on this exchange regarding the question: '{question}'"
-        judge_response = call_claude(client, judge_prompt, judge_message)
+        judge_response = call_llm(client, judge_prompt, judge_message)
         if not judge_response:
             return None
         time.sleep(0.5)
@@ -374,10 +377,10 @@ def main():
         
         # API Key input
         api_key = st.text_input(
-            "Anthropic API Key",
+            "Groq API Key",
             type="password",
             value=st.session_state.api_key or "",
-            help="Enter your Anthropic API key to run trials"
+            help="Enter your Groq API key (free at https://console.groq.com)"
         )
         if api_key:
             st.session_state.api_key = api_key
@@ -414,7 +417,7 @@ def main():
         # Trial button
         if st.button("🎬 START TRIAL", use_container_width=True):
             if not st.session_state.api_key:
-                st.error("⚠️ Please enter your Anthropic API key")
+                st.error("⚠️ Please enter your Groq API key")
             else:
                 st.session_state.current_case = {
                     "case_study": case_study,
@@ -438,6 +441,8 @@ def main():
             - **Witness**: Overconfident AI that hallucinates
             - **Prosecutor**: Fact-checker with ground truth
             - **Judge**: Evaluates harm & assigns risk
+            
+            **Powered by:** Groq (Free, Ultra-Fast LLM API)
             """)
     
     # Main content area
@@ -448,7 +453,7 @@ def main():
         st.markdown(f"**Question Under Examination:** *{case['question']}*")
         st.markdown("---")
         
-        client = get_anthropic_client()
+        client = get_groq_client()
         if client:
             trial_result = run_trial(client, case['case_study'], case['question'])
             
